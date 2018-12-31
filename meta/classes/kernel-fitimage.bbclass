@@ -15,7 +15,7 @@ python __anonymous () {
         elif uarch == "riscv":
             replacementtype = "Image"
         elif uarch == "mips":
-            replacementtype = "vmlinuz.bin"
+            replacementtype = "vmlinux.bin"
         elif uarch == "x86":
             replacementtype = "bzImage"
         elif uarch == "microblaze":
