@@ -131,7 +131,13 @@ def setup_hosttools_dir(dest, toolsvar, d, fatal=True):
 python fetcher_hashes_dummyfunc() {
     return
 }
-fetcher_hashes_dummyfunc[vardepvalue] = "${@bb.fetch.get_hashvalue(d)}"
+fetcher_hashes_dummyfunc[vardepvalue] = "${@validate_hashvalue(d)}"
+
+def validate_hashvalue(d):
+    try:
+        bb.fetch.get_hashvalue(d)
+    except bb.fetch2.FetchError as e:
+        raise bb.parse.SkipRecipe(e)
 
 addtask fetch
 do_fetch[dirs] = "${DL_DIR}"
