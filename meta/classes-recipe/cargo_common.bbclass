@@ -163,6 +163,13 @@ python cargo_common_do_patch_paths() {
 
     manifest_path = d.getVar("MANIFEST_PATH", True)
     lockfile = os.path.join(os.path.dirname(manifest_path), "Cargo.lock")
+
+    # The lock file might be located at the Cargo workspace's root, for
+    # simplicity, we only check the top-level directory. For more information:
+    # https://doc.rust-lang.org/book/ch14-03-cargo-workspaces.html
+    if not os.path.exists(lockfile):
+        lockfile = os.path.join(workdir, d.getVar("S") , "Cargo.lock")
+
     if not os.path.exists(lockfile):
         bb.fatal(f"{lockfile} file doesn't exist")
 
