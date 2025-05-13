@@ -20,7 +20,7 @@ UPSTREAM_CHECK_GITTAGREGEX = "binutils-(?P<pver>\d+_(\d_?)*)"
 
 CVE_STATUS[CVE-2023-25584] = "cpe-incorrect: Applies only for version 2.40 and earlier"
 
-SRCREV ?= "09ba78f051319e8f8861b26fb9340e21ca973c70"
+SRCREV ?= "758a2290dbdf0d6d6c148c6cf25b2bcfd7a5b84f"
 BINUTILS_GIT_URI ?= "git://sourceware.org/git/binutils-gdb.git;branch=${SRCBRANCH};protocol=https"
 SRC_URI = "\
      ${BINUTILS_GIT_URI} \
@@ -37,5 +37,12 @@ SRC_URI = "\
      file://0014-Remove-duplicate-pe-dll.o-entry-deom-targ_extra_ofil.patch \
      file://0015-gprofng-change-use-of-bignum-to-bigint.patch \
      file://0016-CVE-2024-53589.patch \
+     file://0017-dlltool-file-name-too-long.patch \
+     file://0018-CVE-2025-0840.patch \
+     file://CVE-2025-1176.patch \
+     file://CVE-2025-1178.patch \
+     file://CVE-2024-57360.patch \
+     file://CVE-2025-1181-pre.patch \
+     file://CVE-2025-1181.patch \
 "
 S  = "${WORKDIR}/git"
