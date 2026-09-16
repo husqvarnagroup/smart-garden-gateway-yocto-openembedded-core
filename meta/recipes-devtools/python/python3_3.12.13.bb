@@ -44,6 +44,10 @@ SRC_URI = "http://www.python.org/ftp/python/${PV}/Python-${PV}.tar.xz \
            file://CVE-2026-6019_p2.patch \
            file://CVE-2025-13462.patch \
            file://CVE-2026-4224.patch \
+           file://CVE-2026-11940.patch \
+           file://CVE-2026-11972.patch \
+           file://CVE-2026-9669.patch \
+           file://CVE-2026-7210.patch \
            "
 
 SRC_URI:append:class-native = " \
@@ -256,8 +260,24 @@ do_install:append:class-nativesdk () {
     create_wrapper ${D}${bindir}/python${PYTHON_MAJMIN} TERMINFO_DIRS='${sysconfdir}/terminfo:/etc/terminfo:/usr/share/terminfo:/usr/share/misc/terminfo:/lib/terminfo' PYTHONNOUSERSITE='1'
 }
 
-do_install_ptest:append:class-target:libc-musl () {
-    sed -i -e 's|SKIPPED_TESTS=|SKIPPED_TESTS="-x test__locale -x test_c_locale_coercion -x test_locale -x test_os test_re -x test__xxsubinterpreters -x test_threading"|' ${D}${PTEST_PATH}/run-ptest
+# Fails with segfault
+# Bugzilla YP 16182 (test_tracemalloc_track_race)
+SKIPPED_TESTS = " \
+    --ignore test.test_tracemalloc.TestCAPI.test_tracemalloc_track_race \
+"
+
+SKIPPED_TESTS:append:class-target:libc-musl = " \
+    -x test__locale \
+    -x test_c_locale_coercion \
+    -x test_locale \
+    -x test_os test_re \
+    -x test__xxsubinterpreters \
+    -x test_threading \
+"
+
+
+do_install_ptest:append () {
+    sed -i -e "s|SKIPPED_TESTS=|SKIPPED_TESTS=\"${SKIPPED_TESTS}\"|" ${D}${PTEST_PATH}/run-ptest
 }
 
 SYSROOT_PREPROCESS_FUNCS:append:class-target = " provide_target_config_script"
