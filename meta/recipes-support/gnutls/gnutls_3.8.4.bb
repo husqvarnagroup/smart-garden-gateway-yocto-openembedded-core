@@ -46,6 +46,12 @@ SRC_URI = "https://www.gnupg.org/ftp/gcrypt/gnutls/v${SHRT_VER}/gnutls-${PV}.tar
            file://CVE-2026-42009_p1.patch \
            file://CVE-2026-42009_p2.patch \
            file://CVE-2026-3833.patch \
+           file://CVE-2026-42010.patch \
+           file://CVE-2026-42011_p1.patch \
+           file://CVE-2026-42011_p2.patch \
+           file://CVE-2026-33846.patch \
+           file://CVE-2026-33845.patch \
+           file://CVE-2026-5419.patch \
            "
 
 SRC_URI[sha256sum] = "2bea4e154794f3f00180fa2a5c51fe8b005ac7a31cd58bd44cdfa7f36ebc3a9b"
@@ -129,3 +135,4 @@ pkg_postinst_ontarget:${PN}-fips () {
 }
 
 CVE_STATUS[CVE-2026-3832] = "fixed-version: vulnerable multi-record OCSP response handling was introduced in 3.8.8 and is not present in 3.8.4"
+CVE_STATUS[CVE-2026-1584] = "fixed-version: vulnerable code not present, introduced with 3.8.11"
